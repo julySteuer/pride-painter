@@ -22,7 +22,6 @@ macro_rules! make_color {
        let $purple_pair:i16 = 4; 
 
        unsafe { // Could use Macro here as well
-           /*
            init_color(COLOR_RED_FORE, 255,0,0);
            init_color(COLOR_RED_BACK, 255,0,0);
            init_pair($red_pair, COLOR_RED_FORE, COLOR_RED_BACK);
@@ -38,7 +37,6 @@ macro_rules! make_color {
            init_color(COLOR_PURPLE_FORE, 140,87,156);
            init_color(COLOR_PURPLE_BACK, 140,87,156);
            init_pair($purple_pair, COLOR_PURPLE_FORE, COLOR_PURPLE_BACK);
-            */
         } 
     }
 }
@@ -48,5 +46,5 @@ pub fn make_color_from_pallet(index: i32, rgb: (i32,i32,i32)){ // ERROR WITH col
         init_color(index as i16, rgb.0 as i16, rgb.1 as i16, rgb.2 as i16);
         init_color((index+1) as i16, rgb.0 as i16, rgb.1 as i16,rgb.2 as i16);
         init_pair((index+2) as i16,index as i16,(index+1) as i16);
-    }
+    } // COLOR PALETT INDEXING
 }

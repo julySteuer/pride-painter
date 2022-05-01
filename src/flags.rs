@@ -15,7 +15,7 @@ pub struct Flag {
     pub content: Vec<Vec<Pixel>>
 }
 
-pub fn correct(flag: &mut Flag){
+pub fn correct(flag: &Flag) -> Vec<Vec<Pixel>>{
     let mut new_pixels: Vec<Vec<Pixel>> = Vec::new();
     let height = flag.content.len();
     let width = flag.content[0].len();
@@ -24,17 +24,16 @@ pub fn correct(flag: &mut Flag){
     for x in 0..width {
         for y in 0..height {
             let mut temp_pixel: Vec<Pixel> = Vec::new();
-            for i in 0..(size_val as usize) {
+            for i in 0..(size_val as usize) { // try incrementer after size_val
                 let mut new_pixel = flag.content[y][x].clone(); //Error Here
-                new_pixel.x = x as i16+ i as i16; // LOOK HERE ERROR WITH SCALAR
+                new_pixel.x = (x as i16 * size_val as i16) + i as i16; // LOOK HERE ERROR WITH SCALAR
                 new_pixel.y = y as i16;
                 temp_pixel.push(new_pixel);
             } // Set to new Pixel Location
             new_pixels.push(temp_pixel);
         }
     }
-    
-    flag.content = new_pixels;
+    new_pixels
 }
 
 pub fn make_flag(name: String, structure: Vec<Vec<i32>>) -> Flag { // 4:3 ratio
@@ -81,8 +80,8 @@ impl Pixel {
 
 impl Flag {
     pub fn draw(&self){
-        for x in 0..self.content[0].len(){ // Fixed it a bit
-         for y in 0..self.content.len() {
+        for y in 0..self.content.len(){ // Fixed it a bit
+         for x in 0..self.content[0].len() {
             self.content[y][x].draw();       
             let one_sec = time::Duration::from_millis(100);
             thread::sleep(one_sec);
