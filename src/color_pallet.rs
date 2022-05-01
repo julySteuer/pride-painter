@@ -43,8 +43,8 @@ macro_rules! make_color {
 
 pub fn make_color_from_pallet(index: i32, rgb: (i32,i32,i32)){ // ERROR WITH colors maybe here
     unsafe { // INIT COLOR NEED 3 VALUES FOREGROUND AND BACKGROUND
-        init_color(index as i16, rgb.0 as i16, rgb.1 as i16, rgb.2 as i16);
-        init_color((index+1) as i16, rgb.0 as i16, rgb.1 as i16,rgb.2 as i16);
-        init_pair((index+2) as i16,index as i16,(index+1) as i16);
+        init_color((index+1) as i16, rgb.0 as i16, rgb.1 as i16, rgb.2 as i16);
+        init_color((index+2) as i16, rgb.0 as i16, rgb.1 as i16,rgb.2 as i16);
+        init_pair(index as i16,(index+1) as i16,(index+2) as i16);
     } // COLOR PALETT INDEXING
 }

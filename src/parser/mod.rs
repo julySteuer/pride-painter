@@ -39,7 +39,7 @@ fn parse_flag_content(content: Vec<Captures>, stack: HashMap<String, Vec<i32>>) 
         let mut key_num: HashMap<String, i32> = HashMap::new();
         for (i, (k, v)) in stack.iter().enumerate() {
             make_color_from_pallet((i * 3) as i32, (v[0], v[1], v[2]));
-            key_num.entry(k.clone()).or_insert((i * 3) as i32);
+            key_num.entry(k.clone()).or_insert((i * 3 + 3) as i32);
         }
         key_num
     };
