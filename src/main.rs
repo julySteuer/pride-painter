@@ -8,7 +8,7 @@ mod parser;
 use parser::parse_text;
 use std::fs;
 use crate::flags::{correct, shuffle};
-
+//TODO: Waving animation with sin curve  
 fn main() { // Shows flags random pixel with one array with pxel values ranom from this array pop is from array
     //let path = option_env!("FLAG_PATH").unwrap_or(panic!("FLAG_PATH not set set it to the Path of the flag"));
     //let file = fs::read_to_string(path).expect("Error While reading the file");

@@ -19,19 +19,21 @@ pub fn correct(flag: &Flag) -> Vec<Vec<Pixel>>{
     let mut new_pixels: Vec<Vec<Pixel>> = Vec::new();
     let height = flag.content.len();
     let width = flag.content[0].len();
-    let ar = width as f32/(height*7) as f32;
+    let ar = width as f32/(height*5) as f32;
     let size_val = 1.0/ar;
     for x in 0..width {
+        let mut inner: Vec<Pixel> = Vec::new();
         for y in 0..height {
-            let mut temp_pixel: Vec<Pixel> = Vec::new();
+        let mut temp_pixel: Vec<Pixel> = Vec::new();
             for i in 0..(size_val as usize) { // try incrementer after size_val
                 let mut new_pixel = flag.content[y][x].clone(); //Error Here
                 new_pixel.x = (x as i16 * size_val as i16) + i as i16; // LOOK HERE ERROR WITH SCALAR
                 new_pixel.y = y as i16;
                 temp_pixel.push(new_pixel);
             } // Set to new Pixel Location
-            new_pixels.push(temp_pixel);
+            inner.append(&mut temp_pixel);
         }
+        new_pixels.push(inner);
     }
     new_pixels
 }
@@ -57,6 +59,7 @@ pub fn shuffle(flag: &mut Flag){
         elem.shuffle(&mut thread_rng());
         new_pixels.push(elem);
     }
+    new_pixels.shuffle(&mut thread_rng());
     flag.content = new_pixels;
 }
 
