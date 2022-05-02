@@ -18,8 +18,8 @@ fn main() { // Shows flags random pixel with one array with pxel values ranom fr
     //let structure = parse_text(file); 
     
     unsafe {
-        initscr();
-        start_color();
+        //initscr();
+        //start_color();
         /*
         let structure = parse_text(String::from("COLOR_PINK={255,0,0}
                                  COLOR_BLUE={0,0,255}

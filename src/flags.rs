@@ -55,9 +55,10 @@ pub fn make_flag(name: String, structure: Vec<Vec<i32>>) -> Flag { // 4:3 ratio
 pub fn wave_anim(flag: &Flag, period: i16, shift: i16) -> Flag{
     let mut new_flag = Flag{name: flag.name.clone(), content: flag.content.clone()};
     for x in 0..flag.content[0].len() {
-        for y in 0..flag.content.len() {
-            let sinus_offset = (((shift+x as i16)*5) as f64).to_radians().sin(); // Mess with this function
+        for y in 0..flag.content.len() { // Play around with .as_radians()
+            let sinus_offset = (((shift+x as i16)) as f64).sin() * 3.0; // Mess with this function
             new_flag.content[y][x].y = flag.content[y][x].y - sinus_offset as i16;
+            println!("{}, sin: {}", x as i16+shift as i16, sinus_offset);
         }
     }
     new_flag
