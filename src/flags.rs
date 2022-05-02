@@ -14,16 +14,16 @@ pub struct Flag {
     pub name: String, // Stringify macro stringify!()
     pub content: Vec<Vec<Pixel>>
 }
-
+// ERROR IN THIS METHOD
 pub fn correct(flag: &Flag) -> Vec<Vec<Pixel>>{
     let mut new_pixels: Vec<Vec<Pixel>> = Vec::new();
     let height = flag.content.len();
     let width = flag.content[0].len();
     let ar = width as f32/(height*5) as f32;
     let size_val = 1.0/ar;
-    for x in 0..width {
+    for y in 0..height {
         let mut inner: Vec<Pixel> = Vec::new();
-        for y in 0..height {
+        for x in 0..width {
         let mut temp_pixel: Vec<Pixel> = Vec::new();
             for i in 0..(size_val as usize) { // try incrementer after size_val
                 let mut new_pixel = flag.content[y][x].clone(); //Error Here
@@ -50,6 +50,23 @@ pub fn make_flag(name: String, structure: Vec<Vec<i32>>) -> Flag { // 4:3 ratio
             pixels.push(temp_pixel);
        }
        Flag{name, content:pixels}
+}
+
+pub fn wave_anim(flag: &Flag, period: i16, shift: i16) -> Flag{
+    let mut new_flag = Flag{name: flag.name.clone(), content: flag.content.clone()};
+    for x in 0..flag.content[0].len() {
+        for y in 0..flag.content.len() {
+            let offset = {
+                if (x+period as usize) % (period*2) as usize+1 > period as usize {
+                    -1
+                } else {
+                    0
+                }
+            };
+            new_flag.content[y][x].y = new_flag.content[y][x].y - offset;
+        }
+    }
+    new_flag
 }
 
 pub fn shuffle(flag: &mut Flag){
@@ -82,9 +99,9 @@ impl Pixel {
 }
 
 impl Flag {
-    pub fn draw(&self){
-        for y in 0..self.content.len(){ // Fixed it a bit
-         for x in 0..self.content[0].len() {
+    pub fn init(&self){
+        for x in 0..self.content[0].len(){ // Fixed it a bit
+         for y in 0..self.content.len() {
             self.content[y][x].draw();       
             let one_sec = time::Duration::from_millis(100);
             thread::sleep(one_sec);
@@ -93,5 +110,16 @@ impl Flag {
             }
         }
        } 
+    }
+
+    pub fn draw(&self){
+        for x in 0..self.content[0].len() {
+            for y in 0..self.content.len() {
+                self.content[y][x].draw();
+            }
+        }
+        unsafe {
+            refresh();
+        }
     }
 }

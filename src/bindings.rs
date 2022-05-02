@@ -14,4 +14,5 @@ extern {
     pub fn mvaddch(_:c_int, _:c_int, _:u32) -> c_int;
     pub fn COLOR_PAIR(_:c_int) -> c_int;
     pub fn attroff(_:u32) -> c_int;
+    pub fn clear() -> c_int;
 }
