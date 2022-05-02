@@ -54,16 +54,17 @@ pub fn make_flag(name: String, structure: Vec<Vec<i32>>) -> Flag { // 4:3 ratio
 
 pub fn wave_anim(flag: &Flag, period: i16, shift: i16) -> Flag{
     let mut new_flag = Flag{name: flag.name.clone(), content: flag.content.clone()};
+
     for x in 0..flag.content[0].len() {
         for y in 0..flag.content.len() {
             let offset = {
-                if (x+period as usize) % (period*2) as usize+1 > period as usize {
+                if (x+shift as usize) % ((period*2) as usize+1) > period as usize {
                     -1
                 } else {
                     0
                 }
             };
-            new_flag.content[y][x].y = new_flag.content[y][x].y - offset;
+            new_flag.content[y][x].y = flag.content[y][x].y - offset;
         }
     }
     new_flag
@@ -99,6 +100,11 @@ impl Pixel {
 }
 
 impl Flag {
+    pub fn new(name: String, content: Vec<Vec<Pixel>>) -> Flag{
+        Flag {
+            name, content
+        }
+    }
     pub fn init(&self){
         for x in 0..self.content[0].len(){ // Fixed it a bit
          for y in 0..self.content.len() {
