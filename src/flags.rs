@@ -52,13 +52,16 @@ pub fn make_flag(name: String, structure: Vec<Vec<i32>>) -> Flag { // 4:3 ratio
        Flag{name, content:pixels}
 }
 
-pub fn wave_anim(flag: &Flag, period: i16, shift: i16) -> Flag{
+pub fn wave_anim(flag: &Flag, period: f64, max_height: f64,shift: i16) -> Flag{
     let mut new_flag = Flag{name: flag.name.clone(), content: flag.content.clone()};
+    let offset_down = (max_height + 2.0) as i16;
     for x in 0..flag.content[0].len() {
         for y in 0..flag.content.len() { // Play around with .as_radians()
-            let sinus_offset = (((shift+x as i16)) as f64).sin() * 3.0; // Mess with this function
-            new_flag.content[y][x].y = flag.content[y][x].y - sinus_offset as i16;
-            println!("{}, sin: {}", x as i16+shift as i16, sinus_offset);
+            let sinus_offset = ((shift+x as i16) as f64 * period).sin() * max_height; // Mess with this function a bit les violent
+            new_flag.content[y][x].y = flag.content[y][x].y - sinus_offset as i16 + offset_down;
+            if sinus_offset !=0.0{
+                new_flag.content[y][x].x = flag.content[y][x].x - 1;
+            }
         }
     }
     new_flag
@@ -103,7 +106,7 @@ impl Flag {
         for x in 0..self.content[0].len(){ // Fixed it a bit
          for y in 0..self.content.len() {
             self.content[y][x].draw();       
-            let one_sec = time::Duration::from_millis(100);
+            let one_sec = time::Duration::from_millis(150);
             thread::sleep(one_sec);
             unsafe {
                 refresh();

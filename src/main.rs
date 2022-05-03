@@ -18,8 +18,8 @@ fn main() { // Shows flags random pixel with one array with pxel values ranom fr
     //let structure = parse_text(file); 
     
     unsafe {
-        //initscr();
-        //start_color();
+        initscr();
+        start_color();
         /*
         let structure = parse_text(String::from("COLOR_PINK={255,0,0}
                                  COLOR_BLUE={0,0,255}
@@ -44,10 +44,10 @@ fn main() { // Shows flags random pixel with one array with pxel values ranom fr
         //let mut flag = make_flag(String::from("Pride"), structure);
         flag.content = correct(&flag);
         //shuffle(&mut flag);
-        let time_to_sleep = time::Duration::from_millis(200);
+        let time_to_sleep = time::Duration::from_millis(100);
         let mut i = 0;
         loop {
-            let new_flag = wave_anim(&flag, 7, i);
+            let new_flag = wave_anim(&flag, 0.4, 2.0,i);
             new_flag.draw(); // REFERESH has to be moved
             i += 1;
             clear(); 
