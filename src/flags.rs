@@ -67,6 +67,41 @@ pub fn wave_anim(flag: &Flag, period: f64, max_height: f64,shift: i16) -> Flag{
     new_flag
 }
 
+pub fn occelate(wave_length: i16, flag: &Flag, switch: i16) -> Flag {
+    let mut new_flag = Flag{name: flag.name.clone(), content: flag.content.clone()};
+    let mut i: i16 = 0;
+    for x in 0..flag.content[0].len() {
+        for y in 0..flag.content.len() {
+            let switch_val = {
+                if switch % 2 == 0 {
+                    -1
+                }
+                else {
+                    1
+                }
+            };
+            let up_or_down = {
+                if i % wave_length == 0 {
+                    -1
+                } else {
+                    1
+                }
+            };
+            let modolo_off = x % (wave_length*3) as usize;
+            let offset = {
+                if modolo_off > wave_length as usize{
+                    i += 1;
+                    1
+                } else {
+                    0
+                }
+            };
+            new_flag.content[y][x].y = new_flag.content[y][x].y - offset*switch_val+1;
+        }
+    }
+    new_flag
+}
+
 pub fn shuffle(flag: &mut Flag){
     let mut new_pixels: Vec<Vec<Pixel>> = Vec::new();
     let pixels = flag.content.clone();
@@ -81,6 +116,7 @@ pub fn shuffle(flag: &mut Flag){
 fn zoom(pixels:Vec<Vec<Pixel>>, scalar: i16) -> Vec<Vec<Pixel>> {
     todo!();
 }
+
 
 impl Pixel {
     pub fn new(x: i16, y: i16, color: i32) -> Pixel{

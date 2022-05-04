@@ -9,6 +9,7 @@ mod parser;
 use parser::parse_text;
 use std::fs;
 use std::{thread, time};
+use crate::flags::occelate;
 use crate::{flags::{correct, shuffle, wave_anim}, bindings::clear};
 //TODO: Waving animation with sin curve x axis is the x val calc offset  
 // Make File with.f of .flag ending
@@ -44,10 +45,11 @@ fn main() { // Shows flags random pixel with one array with pxel values ranom fr
         //let mut flag = make_flag(String::from("Pride"), structure);
         flag.content = correct(&flag);
         //shuffle(&mut flag);
-        let time_to_sleep = time::Duration::from_millis(100);
+        let time_to_sleep = time::Duration::from_millis(300);
         let mut i = 0;
         loop {
-            let new_flag = wave_anim(&flag, 0.4, 2.0,i);
+            //let new_flag = wave_anim(&flag, 0.4, 2.0,i);
+            let new_flag = occelate(4, &flag, i);
             new_flag.draw(); // REFERESH has to be moved
             i += 1;
             clear(); 
